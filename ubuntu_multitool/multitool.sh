@@ -17,7 +17,7 @@ set -e -u
 #echo "adding user to system"
 
 # username and password are variables and are given a value
-username="dam"
+username="tool"
 github_user="habbis"
 
 config_folder="/local/etc/multitool"
