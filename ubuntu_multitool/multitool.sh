@@ -20,7 +20,7 @@ set -e -u
 username="dam"
 github_user="habbis"
 
-config_folder="/local/etc/DAM"
+config_folder="/local/etc/multitool"
 
 terraform_install_folder="/opt/terraform/"
 terraform_release="0.14.2"
