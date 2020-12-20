@@ -1,0 +1,24 @@
+{
+  "builders": [
+    {
+      "type": "lxd",
+      "name": "lxd-focal",
+      "image": "{{user `build_image`}}",
+      "output_image": "{{user `out_image`}}"
+   }
+  ],
+
+ "provisioners": [
+    {
+      "type": "shell",
+      "script": "./{{user `shell_script`}}"
+    }
+  
+  ],
+   "variables": {
+       "build_image": "ubuntu_focal_lite",
+       "out_image":"docker_lite",
+       "ansible_playbook":"server-lite.yml",
+       "shell_script":"terraform.sh"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "builders": [
+    {
+      "type": "lxd",
+      "name": "lxd-bionic",
+      "image": "{{user `build_image`}}",
+      "output_image": "{{user `out_image`}}"
+   }
+  ],
+
+ "provisioners": [
+    {
+      "type": "ansible",
+      "playbook_file": "./{{user `ansible_playbook`}}"
+    }
+  
+  ],
+   "variables": {
+       "build_image": "ubuntu-daily:bionic",
+       "out_image":"ubuntu_bionic_lite",
+       "ansible_playbook":"server-lite.yml"
+  }
+}

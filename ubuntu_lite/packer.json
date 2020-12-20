@@ -1,0 +1,24 @@
+{
+  "builders": [
+    {
+      "type": "lxd",
+      "name": "lxd-focal",
+      "image": "{{user `build_image`}}",
+      "output_image": "{{user `out_image`}}"
+   }
+  ],
+
+ "provisioners": [
+    {
+      "type": "shell",
+      "script": "./{{user `shell_script`}}"
+    }
+  
+  ],
+   "variables": {
+       "build_image": "ubuntu-daily:focal",
+       "out_image":"ubuntu_focal_lite",
+       "ansible_playbook":"server-lite.yml",
+       "shell_script":"server-lite.sh"
+  }
+}
