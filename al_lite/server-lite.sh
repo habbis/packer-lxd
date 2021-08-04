@@ -30,6 +30,19 @@ github_sudo_admin="https://raw.githubusercontent.com/habbis/sudoers/master/admin
 # utils for the server
 utils="vim tmux python3 nmap git sudo"
 
+if [ -e /usr/bin/apt ]; then
+# enable repo universe ubuntu 18.04
+apt-add-repository universe
+
+# install packages
+apt-get update -y && apt-get install -y ${utils}
+
+else
+
+yum update -y ; yum install -y ${utils}
+
+fi
+
 
 # add new sudo group
 groupadd ${admin_group}
@@ -44,18 +57,6 @@ rm admins
 
 
 
-if [ -e /usr/bin/apt ]; then
-# enable repo universe ubuntu 18.04
-apt-add-repository universe
-
-# install packages
-apt-get update -y && apt-get install -y ${utils}
-
-else
-
-yum update -y ; yum install -y ${utils}
-
-fi
 
 # This install packages 
 #sleep 1
