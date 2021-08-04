@@ -43,13 +43,19 @@ wget ${github_sudo_admin} ; cat admins >> /etc/sudoers.d/admins
 rm admins 
 
 
-# enable repo universe ubuntu 18.04
 
+if [ -e /usr/bin/apt ]; then
+# enable repo universe ubuntu 18.04
 apt-add-repository universe
 
 # install packages
 apt-get update -y && apt-get install -y ${utils}
 
+else
+
+yum update -y ; yum install -y ${utils}
+
+fi
 
 # This install packages 
 #sleep 1
