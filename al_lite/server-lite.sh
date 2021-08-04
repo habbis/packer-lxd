@@ -28,7 +28,7 @@ github_user_sshkeys="https://github.com/habbis.keys"
 github_sudo_admin="https://raw.githubusercontent.com/habbis/sudoers/master/admins"
 
 # utils for the server
-utils="vim tmux python3 nmap git sudo ufw"
+utils="vim tmux python3 nmap git sudo"
 
 
 # add new sudo group
