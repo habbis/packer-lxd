@@ -17,7 +17,7 @@ set -e -u
 #echo "adding user to system"
 
 # username and password are variables and are given a value
-username="user"
+username="ansible"
 github_user="habbis"
 admin_group="admins"
 
@@ -103,6 +103,6 @@ fi
 
 # ufw firewall
 
-ufw allow ssh 
-ufw default deny  incoming
-ufw default allow outgoing
+#ufw allow ssh 
+#ufw default deny  incoming
+#ufw default allow outgoing
