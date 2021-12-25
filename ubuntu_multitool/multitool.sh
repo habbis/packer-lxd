@@ -17,7 +17,8 @@ set -e -u
 #echo "adding user to system"
 
 # username and password are variables and are given a value
-username="tool"
+username="ansible"
+tool_user="tool"
 github_user="habbis"
 
 config_folder="/local/etc/multitool"
@@ -60,6 +61,27 @@ chmod 644 /home/${username}/.ssh/authorized_keys
 wget ${github_user_sshkeys} ; cat ${github_user}.keys >> .ssh/authorized_keys  ; rm ${github_user}.keys 
 
 fi
+
+if test -d /home/${tool_user}/.ssh; then
+	echo 'user have ssh_keys'
+
+else
+
+#sleep 1
+cd /home/${username}/ || exit
+
+# setup home dir of user
+mkdir -p  /home/${tool_user}/.ssh
+touch /home/${tool_user}/.ssh/authorized_keys
+
+chown ${username}:${tool_user} /home/${username}/.ssh
+chmod 700 /home/${tool_user}/.ssh
+chmod 644 /home/${tool_user}/.ssh/authorized_keys
+
+wget ${github_user_sshkeys} ; cat ${github_user}.keys >> .ssh/authorized_keys  ; rm ${github_user}.keys 
+
+fi
+
 # make folders  for application and config folders
 mkdir -p ${terraform_install_folder}
 mkdir -p ${packer_install_folder}
