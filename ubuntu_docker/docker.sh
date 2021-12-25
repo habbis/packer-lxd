@@ -17,7 +17,9 @@ set -e -u
 #echo "adding user to system"
 
 # username and password are variables and are given a value
-username="cusr"
+username="ansible"
+docker_user="ansible"
+
 github_user="habbis"
 #install_folder="/opt/terraform/"
 #release="0.14.2"
@@ -49,9 +51,29 @@ wget ${github_user_sshkeys} ; cat ${github_user}.keys >> .ssh/authorized_keys  ;
 
 fi
 
+if test -d /home/${docker_user}/.ssh; then
+	echo 'user have ssh_keys'
+
+else
+
+#sleep 1
+cd /home/${docker_user}/ || exit
+
+# setup home dir of user
+mkdir -p  /home/${docker_user}/.ssh
+touch /home/${docker_user}/.ssh/authorized_keys
+
+chown ${username}:${docker_user} /home/${username}/.ssh
+chmod 700 /home/${docker_user}/.ssh
+chmod 644 /home/${docker_user}/.ssh/authorized_keys
+
+wget ${github_user_sshkeys} ; cat ${github_user}.keys >> .ssh/authorized_keys  ; rm ${github_user}.keys 
+
+fi
+
 groupadd ${group}
 
-usermod -a -G ${group} ${username}
+usermod -a -G ${group} ${docker_user}
 
 
 #mkdir -p ${install_folder}
