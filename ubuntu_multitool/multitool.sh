@@ -82,43 +82,22 @@ wget ${github_user_sshkeys} ; cat ${github_user}.keys >> .ssh/authorized_keys  ;
 
 fi
 
-# make folders  for application and config folders
-mkdir -p ${terraform_install_folder}
-mkdir -p ${packer_install_folder}
-mkdir -p ${vault_install_folder}
-mkdir -p ${config_folder}/ansible
-mkdir -p ${config_folder}/packer
-mkdir -p ${config_folder}/vault
+# packer
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 
-mkdir -p ${config_folder} ; chown -R dam:dam ${config_folder}
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 
+sudo apt-get update -y && sudo apt-get install -y packer
 
-# install of terraform 
-cd ${terraform_install_folder} || exit
+#terraform
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 
-wget https://releases.hashicorp.com/terraform/${terraform_release}/terraform_${terraform_release}_linux_amd64.zip
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 
-#unzip terraform_${terraform_release}_linux_amd64.zip
-unzip *.zip
+sudo apt-get update -y && sudo apt-get install -y terraform
 
-ln -s  ${terraform_install_folder}/terraform /usr/local/bin/terraform
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
 
-# install of packer
-cd ${packer_install_folder} || exit
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 
-wget https://releases.hashicorp.com/packer/${packer_release}/packer_${packer_release}_linux_amd64.zip
-
-#unzip packer_${packer_release}_linux_amd64.zip
-unzip *.zip
-
-ln -s  ${packer_install_folder}/packer /usr/local/bin/packer
-
-# install of vault
-cd ${vault_install_folder} || exit
-
-wget https://releases.hashicorp.com/vault/${vault_release}/vault_${vault_release}_linux_amd64.zip
-
-#unzip packer_${vault_release}_linux_amd64.zip
-unzip *.zip
-
-ln -s  ${vault_install_folder}/packer /usr/local/bin/vault
+sudo apt-get update -y && sudo apt-get install -y vault
