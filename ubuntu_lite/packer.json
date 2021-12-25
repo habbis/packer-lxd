@@ -11,7 +11,7 @@
  "provisioners": [
     {
       "type": "shell",
-      "script": "./{{user `shell_script`}}"
+      "script": "./{{user `../shell_script`}}"
     }
   
   ],
