@@ -17,7 +17,7 @@ set -e -u
 #echo "adding user to system"
 
 # username and password are variables and are given a value
-username="auser"
+username="ansible"
 github_user="habbis"
 install_folder="/opt/terraform/"
 #release="0.14.2"
