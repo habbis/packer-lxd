@@ -17,7 +17,8 @@ set -e -u
 #echo "adding user to system"
 
 # username and password are variables and are given a value
-username="tfuser"
+username="ansible"
+tf_user="tfuser"
 github_user="habbis"
 install_folder="/opt/terraform/"
 release="0.14.2"
@@ -48,12 +49,28 @@ wget ${github_user_sshkeys} ; cat ${github_user}.keys >> .ssh/authorized_keys  ;
 
 fi
 
-mkdir -p ${install_folder}
+if test -d /home/${tf_user}/.ssh; then
+	echo 'user have ssh_keys'
 
-cd ${install_folder} || exit
+else
 
-wget https://releases.hashicorp.com/terraform/${release}/terraform_${release}_linux_amd64.zip
-unzip terraform_${release}_linux_amd64.zip
+#sleep 1
+cd /home/${tf_user}/ || exit
 
-ln -s  ${install_folder}/terraform /usr/local/bin/terraform
+# setup home dir of user
+mkdir -p  /home/${tf_user}/.ssh
+touch /home/${username}/.ssh/authorized_keys
 
+chown ${username}:${tf_user} /home/${username}/.ssh
+chmod 700 /home/${tf_user}/.ssh
+chmod 644 /home/${tf_user}/.ssh/authorized_keys
+
+wget ${github_user_sshkeys} ; cat ${github_user}.keys >> .ssh/authorized_keys  ; rm ${github_user}.keys 
+
+fi
+
+curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+
+sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+
+sudo apt-get update -y && sudo apt-get install -y terraform
